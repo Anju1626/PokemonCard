@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import './PokemonApp.css'; // We'll create this file for custom CSS
 
 const PokemonApp = () => {
   const [pokemon, setPokemon] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchPokemon = async () => {
@@ -14,8 +16,10 @@ const PokemonApp = () => {
           return res.json();
         }));
         setPokemon(results);
+        setLoading(false);
       } catch (error) {
         console.error('Error fetching Pokemon:', error);
+        setLoading(false);
       }
     };
 
@@ -27,28 +31,44 @@ const PokemonApp = () => {
   );
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-4">Pokemon Search</h1>
-      <input
-        type="text"
-        placeholder="Search Pokemon..."
-        className="w-full p-2 mb-4 border rounded"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {filteredPokemon.map((p) => (
-          <div key={p.id} className="border rounded p-4 flex flex-col items-center">
-            <img 
-              src={p.sprites.front_default} 
-              alt={p.name} 
-              className="w-32 h-32"
-            />
-            <h2 className="text-xl font-semibold mt-2 capitalize">{p.name}</h2>
-            <p>Types: {p.types.map(t => t.type.name).join(', ')}</p>
-          </div>
-        ))}
-      </div>
+    <div className="pokemon-app">
+      <header className="app-header">
+        <h1 className="app-title">Pokédex</h1>
+        <input
+          type="text"
+          placeholder="Search Pokémon..."
+          className="search-input"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </header>
+      {loading ? (
+        <div className="loading">Loading Pokémon...</div>
+      ) : (
+        <div className="pokemon-grid">
+          {filteredPokemon.map((p) => (
+            <div key={p.id} className="pokemon-card">
+              <div className="pokemon-image-container">
+                <img 
+                  src={p.sprites.front_default} 
+                  alt={p.name} 
+                  className="pokemon-image"
+                />
+              </div>
+              <div className="pokemon-info">
+                <h2 className="pokemon-name">{p.name}</h2>
+                <div className="pokemon-types">
+                  {p.types.map(t => (
+                    <span key={t.type.name} className={`type-badge ${t.type.name}`}>
+                      {t.type.name}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
