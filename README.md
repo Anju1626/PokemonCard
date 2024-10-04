@@ -3,7 +3,16 @@
 
 https://github.com/user-attachments/assets/ada3dadb-24ec-4c65-b556-47f94b7b53c6
 
+# Explanation:
 
+Pokemon Card Information App: This application could potentially be a web or mobile app that allows users to search for information about Pokemon cards. Users might be able to:
+Search for cards by name, set, or type.
+View detailed information about each card, including its image, stats, attacks, and weaknesses.
+Potentially filter and sort cards based on various criteria.
+Technologies Used (Based on Assumptions):
+
+Frontend: The application is using a JavaScript framework React.js.
+Backend: It fetch data from a Pokemon card API (e.g., Pokemon Trading Card Game API) to retrieve information about the cards.
 
 # Getting Started with Create React App
 
